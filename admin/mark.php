@@ -1,14 +1,11 @@
-<?php 
+<?php
     session_start();
     if(!isset($_SESSION['login'])){
         header("LOCATION:403.php");
     }
+    
+    require "../connexion.php";
 
-    if(isset($_GET['deco']))
-    {
-        session_destroy();
-        header("LOCATION:index.php");
-    }
 ?>
 
 
@@ -24,12 +21,12 @@
     <title>Document</title>
 </head>
 <body>
-    <?php
+    <?php 
         include("partials/header.php");
     ?>
     <div class="container-fluid">
+        
 
-        <h1>Dashboard</h1>
-    </div>
+    </div>    
 </body>
 </html>
