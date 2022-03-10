@@ -1,3 +1,40 @@
+<?php
+    session_start();
+
+    if(isset($_SESSION['login'])){
+        header("LOCATION:dashboard.php");
+    }
+
+    if(isset($_POST['login'])){
+        if(empty($_POST['login']) OR empty($_POST['password']))
+        {
+            $error="Veuillez remplir correctement le formulaire";
+        }else{
+            require "../connexion.php";
+            $req = $bdd->prepare("SELECT * FROM users WHERE login=?");
+            $login = htmlspecialchars($_POST['login']);
+            $req->execute([$login]);
+            if($don=$req->fetch())
+            {
+                $req->closeCursor();
+                if(password_verify($_POST['password'],$don['password']))
+                {
+                    $_SESSION['login']=$don['login'];
+                    header("LOCATION:dashboard.php");
+                }else{
+                    $error="Votre mot de passe n'est pas correct";
+                }
+            }else{
+                $req->closeCursor();
+                $error="Votre login n'existe pas";
+            }
+
+        }
+    }
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,6 +63,12 @@
                     <div class="form-group">
                         <input type="submit" value="Connexion" class="btn btn-primary">
                     </div>
+                    <?php
+                        if(isset($error))
+                        {
+                            echo "<div class='alert alert-danger mt-3'>".$error."</div>";
+                        }
+                    ?>
                 </div>
             </div>
         </form>
