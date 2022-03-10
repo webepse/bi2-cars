@@ -26,7 +26,7 @@
     ?>
     <div class="container-fluid">
         <h1>Les voitures</h1>
-        <a href="#" class="btn btn-primary">Ajouter</a>
+        <a href="carsAdd.php" class="btn btn-primary">Ajouter</a>
         <table class="table table-hover">
             <thead>
                 <tr>

@@ -25,8 +25,35 @@
         include("partials/header.php");
     ?>
     <div class="container-fluid">
-        
+        <h1>Les marques de voiture</h1>
+        <a href="#" class="btn btn-primary">Ajouter</a>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>marque</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                      $cars = $bdd->query("SELECT * FROM marques");
+                       while($donCars = $cars->fetch())
+                       {
+                            echo "<tr>";    
+                                echo "<td>".$donCars['id']."</td>";
+                                echo "<td>".$donCars['nom']."</td>";
+                                echo "<td>";
+                                    echo "<a href='' class='btn btn-warning mx-2'>Modifier</a>";
+                                    echo "<a href='' class='btn btn-danger mx-2'>Supprimer</a>";
+                                echo "</td>";
+                            echo "</tr>";
+                       }
+                       $cars->closeCursor();
 
+                ?>
+            </tbody>
+        </table>
     </div>    
 </body>
 </html>

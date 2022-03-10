@@ -28,8 +28,9 @@
         include("partials/header.php");
     ?>
     <div class="container-fluid">
-
         <h1>Dashboard</h1>
+
+
     </div>
 </body>
 </html>
