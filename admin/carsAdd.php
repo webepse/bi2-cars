@@ -57,6 +57,32 @@
             <div class="form-group my-2">
                 <input type="submit" value="Enregister" class="btn btn-success">
             </div>
+            <?php
+                if(isset($_GET['error']))
+                {
+                    echo "<div class='alert alert-danger my-3'>Une erreur s'est produite (code erreur: ".$_GET['error'].")</div>";
+                }
+
+                if(isset($_GET['imgerror']))
+                {
+                    switch($_GET['imgerror'])
+                    {
+                        case 2: 
+                            echo "<div class='alert alert-danger'>L'extension de votre fichier n'est pas acceptée</div>";
+                            break;
+                        case 3:
+                            echo "<div class='alert alert-danger'>La taille de votre fichier dépasse la limite autorisée</div>";
+                            break;  
+                        case 4:
+                            echo "<div class='alert alert-danger'>Une erreur est survenue, veuillez recommencer</div>";
+                            break;  
+                        default: 
+                            echo "<div class='alert alert-danger'>Une erreur est survenue</div>";      
+                    }
+                }
+            ?>
+
+
         </form>
     </div>
 </body>

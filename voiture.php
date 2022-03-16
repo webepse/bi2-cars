@@ -21,7 +21,6 @@
         $car->closeCursor();
         header("LOCATION:404.php");
     }
-
     $car->closeCursor();
 
 ?>

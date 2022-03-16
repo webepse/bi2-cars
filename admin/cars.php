@@ -27,6 +27,12 @@
     <div class="container-fluid">
         <h1>Les voitures</h1>
         <a href="carsAdd.php" class="btn btn-primary">Ajouter</a>
+        <?php
+            if(isset($_GET['addCars']))
+            {
+                echo "<div class='alert alert-success'>Vous avez bien ajouté une voiture à la base de données</div>";
+            }
+        ?>
         <table class="table table-hover">
             <thead>
                 <tr>

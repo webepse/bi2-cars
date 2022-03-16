@@ -15,13 +15,12 @@
 <body>
     <h1>Cars</h1>
     <?php
-        $cars = $bdd->query("SELECT voiture.model AS vmodel, marques.nom AS mnom, voiture.id AS vid FROM voiture INNER JOIN marques ON voiture.id_marque = marques.id");
-        while($car = $cars->fetch())
+        $voitures = $bdd->query("SELECT voiture.model AS vmodel, marques.nom AS mnom, voiture.id AS vid FROM voiture INNER JOIN marques ON voiture.id_marque = marques.id");
+        while($voiture = $voitures->fetch())
         {
-            echo "<a href='voiture.php?id=".$car['vid']."' class='car'>".$car['mnom']." ".$car['vmodel']."</a>";
+            echo "<a href='voiture.php?id=".$voiture['vid']."' class='car'>".$voiture['mnom']." ".$voiture['vmodel']."</a>";
         }
-        $cars->closeCursor();
+        $voitures->closeCursor();
     ?>
-
 </body>
 </html>
