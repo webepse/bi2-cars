@@ -20,47 +20,24 @@
         include("partials/header.php");
     ?>
     <div class="container">
-        <h1>Ajouter une voiture</h1>
-        <form action="treatmentCarsAdd.php" method="POST" enctype="multipart/form-data">
-            <div class="form-group my-2">
-                <label for="marque">Marque:</label>
-                <select name="marque" id="marque" class="form-control">
-                    <?php
-                        require "../connexion.php";
-                        $brands = $bdd->query("SELECT * FROM marques");
-                        while($donBrands = $brands->fetch()){
-                            echo "<option value='".$donBrands['id']."'>".$donBrands['nom']."</option>";
-                        }
-                        $brands->closeCursor();
-                    ?>
-                </select>
-            </div>
-            <div class="form-group my-2">
-                <label for="model">Modèle: </label>
-                <input type="text" id="model" name="model" class="form-control" value="">
-            </div>
-            <div class="form-group my-2">
-                <label for="carbu">Carburant: </label>
-                <select name="carburant" id="carbur" class="form-control">
-                    <option value="E">Essence</option>
-                    <option value="D">Diesel</option>
-                    <option value="El">Electrique</option>
-                    <option value="H">Hybride</option>
-                </select>
-            </div>
-            <div class="form-group my-2">
-                <label for="cover">Image de couverture: </label>
-                <input type="file" name="cover" id="cover" class="form-control">
-            </div>
-            <div class="form-group my-2">
-                <input type="submit" value="Enregister" class="btn btn-success">
-            </div>
-            <?php
+        <h1>Ajouter une marque</h1>
+        <form action="treatmentMarkAdd.php" method="POST" enctype="multipart/form-data">
+          <div class="form-group my-3">
+              <label for="marque">Marque: </label>
+              <input type="text" id="marque" name="marque" value="" class="form-control">
+          </div>
+          <div class="form-group my-3">
+              <label for="logo">Logo: </label>
+              <input type="file" name="logo" id="logo" class="form-control">
+          </div>
+          <div class="form-group my-3">
+              <input type="submit" value="Ajouter" class="btn btn-primary">
+          </div>
+          <?php
                 if(isset($_GET['error']))
                 {
                     echo "<div class='alert alert-danger my-3'>Une erreur s'est produite (code erreur: ".$_GET['error'].")</div>";
                 }
-
                 if(isset($_GET['imgerror']))
                 {
                     switch($_GET['imgerror'])
@@ -78,11 +55,9 @@
                             echo "<div class='alert alert-danger'>Une erreur est survenue</div>";      
                     }
                 }
-            ?>
 
-
+          ?>
         </form>
     </div>
 </body>
 </html>
-    
