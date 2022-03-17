@@ -89,8 +89,7 @@
             }else{
                 // traitement avec image
 
-                // supprimer l'image
-                unlink("../images/".$don['cover']);
+            
                   //gestion de l'image
                 $dossier = '../images/';
                 $fichier = basename($_FILES['cover']['name']);
@@ -127,6 +126,8 @@
                     // déplacement du fichier dans le bon dossier avec le bon nom
                     if(move_uploaded_file($_FILES['cover']['tmp_name'], $dossier.$fichiercpt))
                     {
+                        // supprimer l'image
+                        unlink("../images/".$don['cover']);
                         // modification de la base de données 
                         $update = $bdd->prepare("UPDATE voiture SET id_marque=:idMark, model=:model, carburant=:carbu, cover=:cover WHERE id=:id");
                         $update->execute([

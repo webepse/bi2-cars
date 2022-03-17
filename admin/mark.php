@@ -27,6 +27,17 @@
     <div class="container-fluid">
         <h1>Les marques de voiture</h1>
         <a href="markAdd.php" class="btn btn-primary">Ajouter</a>
+        <?php
+            if(isset($_GET['addMark']))
+            {
+                echo "<div class='alert alert-success'>Vous avez bien ajouté une marque de voiture à la base de données</div>";
+            }
+
+            if(isset($_GET['markUpdate']))
+            {
+                echo "<div class='alert alert-warning'>Vous avez bien modifié la marque n°".$_GET['markUpdate']."</div>";
+            }
+        ?>
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -44,7 +55,7 @@
                                 echo "<td>".$donCars['id']."</td>";
                                 echo "<td>".$donCars['nom']."</td>";
                                 echo "<td>";
-                                    echo "<a href='' class='btn btn-warning mx-2'>Modifier</a>";
+                                    echo "<a href='markUpdate.php?id=".$donCars['id']."' class='btn btn-warning mx-2'>Modifier</a>";
                                     echo "<a href='' class='btn btn-danger mx-2'>Supprimer</a>";
                                 echo "</td>";
                             echo "</tr>";
