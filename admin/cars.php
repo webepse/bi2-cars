@@ -32,6 +32,11 @@
             {
                 echo "<div class='alert alert-success'>Vous avez bien ajouté une voiture à la base de données</div>";
             }
+
+            if(isset($_GET['UpdateCars']))
+            {
+                echo "<div class='alert alert-warning'>Vous avez bien modifié la voiture n°".$_GET['UpdateCars']."</div>";
+            }
         ?>
         <table class="table table-hover">
             <thead>
@@ -52,7 +57,7 @@
                                 echo "<td>".$donCars['mnom']."</td>";
                                 echo "<td>".$donCars['vmodel']."</td>";
                                 echo "<td>";
-                                    echo "<a href='' class='btn btn-warning mx-2'>Modifier</a>";
+                                    echo "<a href='carsUpdate.php?id=".$donCars['vid']."' class='btn btn-warning mx-2'>Modifier</a>";
                                     echo "<a href='' class='btn btn-danger mx-2'>Supprimer</a>";
                                 echo "</td>";
                             echo "</tr>";

@@ -3,6 +3,27 @@
     if(!isset($_SESSION['login'])){
         header("LOCATION:403.php");
     }
+
+// j'ai besoin de id pour fonctionner
+if(!isset($_GET['id']))
+{
+    header("LOCATION:cars.php");
+}else{
+    $id = htmlspecialchars($_GET['id']);
+}
+
+
+require "../connexion.php";
+$req = $bdd->prepare("SELECT * FROM voiture WHERE id=?");
+$req->execute([$id]);
+if(!$don = $req->fetch())
+{
+    $req->closeCursor();
+    header("LOCATION:cars.php");
+}
+$req->closeCursor();
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,7 +42,7 @@
     ?>
     <div class="container">
         <h1>Ajouter une voiture</h1>
-        <form action="treatmentCarsAdd.php" method="POST" enctype="multipart/form-data">
+        <form action="treatmentCarsUpdate.php?id=<?= $don['id'] ?>" method="POST" enctype="multipart/form-data">
             <div class="form-group my-2">
                 <label for="marque">Marque:</label>
                 <select name="marque" id="marque" class="form-control">
@@ -29,7 +50,11 @@
                         require "../connexion.php";
                         $brands = $bdd->query("SELECT * FROM marques");
                         while($donBrands = $brands->fetch()){
-                            echo "<option value='".$donBrands['id']."'>".$donBrands['nom']."</option>";
+                            if($don['id_marque']==$donBrands['id']){
+                                echo "<option value='".$donBrands['id']."' selected>".$donBrands['nom']."</option>";
+                            }else{
+                                echo "<option value='".$donBrands['id']."'>".$donBrands['nom']."</option>";
+                            }
                         }
                         $brands->closeCursor();
                     ?>
@@ -37,23 +62,54 @@
             </div>
             <div class="form-group my-2">
                 <label for="model">Modèle: </label>
-                <input type="text" id="model" name="model" class="form-control" value="">
+                <input type="text" id="model" name="model" class="form-control" value="<?= $don['model'] ?>">
             </div>
             <div class="form-group my-2">
                 <label for="carbu">Carburant: </label>
                 <select name="carburant" id="carbur" class="form-control">
-                    <option value="E">Essence</option>
-                    <option value="D">Diesel</option>
-                    <option value="El">Electrique</option>
-                    <option value="H">Hybride</option>
+                    <?php 
+                        if($don['carburant']=="E")
+                        {
+                            echo '<option value="E" selected>Essence</option>';
+                            echo '<option value="D">Diesel</option>';
+                            echo '<option value="El">Electrique</option>';
+                            echo '<option value="H">Hybride</option>';
+                            
+                        }elseif($don['carburant']=="D")
+                        {
+                            echo '<option value="E">Essence</option>';
+                            echo '<option value="D" selected>Diesel</option>';
+                            echo '<option value="El">Electrique</option>';
+                            echo '<option value="H">Hybride</option>';
+                        }elseif($don['carburant']=="El")
+                        {
+                            echo '<option value="E">Essence</option>';
+                            echo '<option value="D">Diesel</option>';
+                            echo '<option value="El" selected>Electrique</option>';
+                            echo '<option value="H">Hybride</option>';
+                        }else{
+                            echo '<option value="E">Essence</option>';
+                            echo '<option value="D">Diesel</option>';
+                            echo '<option value="El">Electrique</option>';
+                            echo '<option value="H" selected>Hybride</option>';
+                        }
+
+                    ?>
+                   
+                   
+                    
+                    
                 </select>
             </div>
             <div class="form-group my-2">
+                <div class="col-4">
+                    <img src="../images/<?= $don['cover'] ?>" alt="image de voiture" class="img-fluid">
+                </div>
                 <label for="cover">Image de couverture: </label>
                 <input type="file" name="cover" id="cover" class="form-control">
             </div>
             <div class="form-group my-2">
-                <input type="submit" value="Enregister" class="btn btn-success">
+                <input type="submit" value="Modifier" class="btn btn-warning">
             </div>
             <?php
                 if(isset($_GET['error']))
