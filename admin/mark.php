@@ -6,6 +6,35 @@
     
     require "../connexion.php";
 
+    if(isset($_GET['delete']))
+    {
+        $id=htmlspecialchars($_GET['delete']);
+        $mark = $bdd->prepare("SELECT * FROM marques WHERE id=?");
+        $mark->execute([$id]);
+        if(!$donMark = $mark->fetch())
+        {
+            $mark->closeCursor();
+            header("LOCATION:404.php");
+        }
+        $mark->closeCursor();
+
+        unlink("../images/".$donMark['logo']);
+
+        // supprimer les voitures de la marque
+            // supprimer les images de voitures (cover)
+            // supprimer les galeries images de voitures de la marque  
+
+        // autre possibilité, vérifier s'il y a des voitures de la marque à supprimer, si c'est le cas, stopper l'action et prévenir l'utilisateur d'aller supprimer les voitures 
+
+
+        $deleteBrands = $bdd->prepare("DELETE FROM marques WHERE id=?");
+        $deleteBrands->execute([$id]);
+        $deleteBrands->closeCursor();
+
+        header("LOCATION:mark.php?deleteSuccess=".$id);
+
+    }
+
 ?>
 
 
@@ -37,6 +66,11 @@
             {
                 echo "<div class='alert alert-warning'>Vous avez bien modifié la marque n°".$_GET['markUpdate']."</div>";
             }
+
+            if(isset($_GET['deleteSuccess']))
+            {
+                echo "<div class='alert alert-danger'>Vous avez bien supprimé la marque n°".$_GET['deleteSuccess']."</div>";
+            }
         ?>
         <table class="table table-hover">
             <thead>
@@ -48,19 +82,19 @@
             </thead>
             <tbody>
                 <?php
-                      $cars = $bdd->query("SELECT * FROM marques");
-                       while($donCars = $cars->fetch())
+                      $brands = $bdd->query("SELECT * FROM marques");
+                       while($donbrands = $brands->fetch())
                        {
                             echo "<tr>";    
-                                echo "<td>".$donCars['id']."</td>";
-                                echo "<td>".$donCars['nom']."</td>";
+                                echo "<td>".$donbrands['id']."</td>";
+                                echo "<td>".$donbrands['nom']."</td>";
                                 echo "<td>";
-                                    echo "<a href='markUpdate.php?id=".$donCars['id']."' class='btn btn-warning mx-2'>Modifier</a>";
-                                    echo "<a href='' class='btn btn-danger mx-2'>Supprimer</a>";
+                                    echo "<a href='markUpdate.php?id=".$donbrands['id']."' class='btn btn-warning mx-2'>Modifier</a>";
+                                    echo "<a href='mark.php?delete=".$donbrands['id']."' class='btn btn-danger mx-2'>Supprimer</a>";
                                 echo "</td>";
                             echo "</tr>";
                        }
-                       $cars->closeCursor();
+                       $brands->closeCursor();
 
                 ?>
             </tbody>
