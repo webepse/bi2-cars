@@ -6,6 +6,50 @@
     
     require "../connexion.php";
 
+    // mode suppression
+    if(isset($_GET['delete']))
+    {
+        // protection de l'id qui est delete 
+        $id = htmlspecialchars($_GET['delete']);
+        // recherche dans la bdd la valeur que l'on souhaite supprimer
+        $req = $bdd->prepare("SELECT * FROM voiture WHERE id=?");
+        $req->execute([$id]);
+        // vérification si la valeur à supprimer existe
+        if(!$don=$req->fetch())
+        {
+            // la valeur n'existe pas, fermer la requête, redirection vers une page introuvable (404)
+            $req->closeCursor();
+            header("LOCATION:404.php");
+        }
+        // je ne suis pas rentré dans le test (si valeur n'existe pas) alors je continue sur ma page
+        $req->closeCursor();
+        // supprimer l'image
+        unlink("../images/".$don['cover']);
+
+        // suppression des image de la galerie associé à la voiture 
+        $gal = $bdd->prepare("SELECT * FROM images WHERE id_voiture=?");
+        $gal->execute([$id]);
+        while($galDon=$gal->fetch())
+        {
+            unlink("../images/".$galDon['image']);
+        }
+        $gal->closeCursor();
+
+        // supprimer les données des images dans la bdd
+        $deleteimg = $bdd->prepare("DELETE FROM images WHERE id_voiture=?");
+        $deleteimg->execute([$id]);
+        $deleteimg->closeCursor();
+
+        // supprimer les données dans la bdd
+        $delete = $bdd->prepare("DELETE FROM voiture WHERE id=?");
+        $delete->execute([$id]);
+        $delete->closeCursor();
+
+        // j'ai tout supprimé en rapport avec la voiture donc je redirect vers la page cars avec une info validant la suppression
+        header("LOCATION:cars.php?deleteSuccess=".$id);
+      
+    }
+
 ?>
 
 
@@ -37,6 +81,11 @@
             {
                 echo "<div class='alert alert-warning'>Vous avez bien modifié la voiture n°".$_GET['UpdateCars']."</div>";
             }
+
+            if(isset($_GET['deleteSuccess']))
+            {
+                echo "<div class='alert alert-danger'>Vous avez bien supprimé la voiture n°".$_GET['deleteSuccess']."</div>";
+            }
         ?>
         <table class="table table-hover">
             <thead>
@@ -58,7 +107,7 @@
                                 echo "<td>".$donCars['vmodel']."</td>";
                                 echo "<td>";
                                     echo "<a href='carsUpdate.php?id=".$donCars['vid']."' class='btn btn-warning mx-2'>Modifier</a>";
-                                    echo "<a href='' class='btn btn-danger mx-2'>Supprimer</a>";
+                                    echo "<a href='cars.php?delete=".$donCars['vid']."' class='btn btn-danger mx-2'>Supprimer</a>";
                                 echo "</td>";
                             echo "</tr>";
                        }
