@@ -26,6 +26,32 @@
 
         // autre possibilité, vérifier s'il y a des voitures de la marque à supprimer, si c'est le cas, stopper l'action et prévenir l'utilisateur d'aller supprimer les voitures 
 
+        $cars = $bdd->prepare("SELECT * FROM voiture WHERE id_marque=?");
+        $cars->execute([$id]);
+        while($donCars = $cars->fetch())
+        {
+            // je supprime les cover des voitures de la marque
+            unlink("../images/".$donCars['cover']);
+            // supprimer la galerie de la voiture
+            $galImg = $bdd->prepare("SELECT * FROM images WHERE id_voiture=?");
+            $galImg->execute([$donCars['id']]);
+            while($donGalImg = $galImg->fetch())
+            {
+                // je supprime les images de galerie 
+                unlink("../images/".$donGalImg['image']);
+            }
+            $galImg->closeCursor();
+            // je supprime toutes les images de galerie ayant la réf vers la voiture à supprimer
+            $delImg = $bdd->prepare("DELETE FROM images WHERE id_voiture=?");
+            $delImg->execute([$donCars['id']]);
+            $delImg->closeCursor();
+        }
+        $cars->closeCursor();
+        
+        // supprimer les voitures ayant la ref de la marque à supprimer
+        $delCars = $bdd->prepare("DELETE FROM voiture WHERE id_marque=?");
+        $delCars->execute([$id]);
+        $delCars->closeCursor();
 
         $deleteBrands = $bdd->prepare("DELETE FROM marques WHERE id=?");
         $deleteBrands->execute([$id]);

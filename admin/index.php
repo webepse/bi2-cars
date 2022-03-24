@@ -31,10 +31,7 @@
 
         }
     }
-
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,7 +69,6 @@
                 </div>
             </div>
         </form>
-
     </div>
 </body>
 </html>
