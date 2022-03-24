@@ -23,6 +23,28 @@ if(!$don = $req->fetch())
 }
 $req->closeCursor();
 
+if(isset($_GET['delidimg']))
+{
+    $idImg = htmlspecialchars($_GET['delidimg']);
+    $img = $bdd->prepare("SELECT * FROM images WHERE id=?");
+    $img->execute([$idImg]);
+    if($donImg = $img->fetch())
+    {
+        unlink("../images/".$donImg['image']);
+    }else{
+        $img->closeCursor();
+        header("LOCATION:carsUpdate.php?id=".$id);
+    }
+    $img->closeCursor();
+
+    $delImg = $bdd->prepare("DELETE FROM images WHERE id=?");
+    $delImg->execute([$idImg]);
+    $delImg->closeCursor();
+
+    header("LOCATION:carsUpdate.php?id=".$id."&delsuccess=".$idImg);
+
+}
+
 
 ?>
 <!DOCTYPE html>
@@ -41,7 +63,7 @@ $req->closeCursor();
         include("partials/header.php");
     ?>
     <div class="container">
-        <h1>Ajouter une voiture</h1>
+        <h1>Modifier <?= $don['model'] ?></h1>
         <form action="treatmentCarsUpdate.php?id=<?= $don['id'] ?>" method="POST" enctype="multipart/form-data">
             <div class="form-group my-2">
                 <label for="marque">Marque:</label>
@@ -138,6 +160,13 @@ $req->closeCursor();
         </form>
 
         <h3>Galerie d'image</h3>
+        <?php
+            if(isset($_GET['delsuccess']))
+            {
+                echo "<div class='alert alert-danger'>Vous avez bien supprimé l'image n°".$_GET['delsuccess']."</div>";
+            }
+
+        ?>
         <a href="imgAdd.php?id=<?= $id ?>" class="btn btn-primary">Ajouter une image</a>
         <table class="table table-hover">
             <thead>
@@ -155,8 +184,8 @@ $req->closeCursor();
                     {
                         echo "<tr>";
                             echo "<td>".$donGalImg['id']."</td>";
-                            echo "<td>".$donGalImg['image']."</td>";
-                            echo "<td><a href='' class='btn btn-danger'>Supprimer</a></td>";
+                            echo "<td><img src='../images/".$donGalImg['image']."' alt='image de galerie' class='img-fluid gal-img'></td>";
+                            echo "<td><a href='carsUpdate.php?id=".$id."&delidimg=".$donGalImg['id']."' class='btn btn-danger'>Supprimer</a></td>";
                         echo "</tr>";
                     }
                     $galImg->closeCursor();

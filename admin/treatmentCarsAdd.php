@@ -56,7 +56,7 @@
             //gestion de l'image
             $dossier = '../images/';
             $fichier = basename($_FILES['cover']['name']);
-            $taille_maxi = 200000;
+            $taille_maxi = 800000;
             $taille = filesize($_FILES['cover']['tmp_name']);
             $extensions = ['.png', '.gif', '.jpg', '.jpeg'];
             $extension = strrchr($_FILES['cover']['name'], '.');

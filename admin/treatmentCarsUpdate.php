@@ -93,7 +93,7 @@
                   //gestion de l'image
                 $dossier = '../images/';
                 $fichier = basename($_FILES['cover']['name']);
-                $taille_maxi = 200000;
+                $taille_maxi = 800000;
                 $taille = filesize($_FILES['cover']['tmp_name']);
                 $extensions = ['.png', '.gif', '.jpg', '.jpeg'];
                 $extension = strrchr($_FILES['cover']['name'], '.');
@@ -110,7 +110,7 @@
                 // vérif si prob avec  le fichier envoyé
                 if(isset($imgError))
                 {
-                    header("LOCATION:carsAdd.php?imgerror=".$imgError);
+                    header("LOCATION:carsUpdate.php?id=".$id."&imgerror=".$imgError);
                 }else{
                     //  pas de problème donc on va essayer de le déplacer et gérer la syntaxe du nom de fichier
                     //On formate le nom du fichier, strtr remplace tous les KK spéciaux en normaux suivant notre liste
