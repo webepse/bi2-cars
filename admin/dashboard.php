@@ -9,6 +9,8 @@
         session_destroy();
         header("LOCATION:index.php");
     }
+
+    require "../connexion.php";
 ?>
 
 
@@ -27,8 +29,35 @@
     <?php
         include("partials/header.php");
     ?>
-    <div class="container-fluid">
+    <div class="container">
         <h1>Dashboard</h1>
+        <div class="row d-flex justify-content-between">
+            <div class="col-3 bg-primary text-white text-center">
+                <h2>Voiture(s)</h2>
+                <?php
+                    $cars = $bdd->query("SELECT * FROM voiture");
+                    $nbCars = $cars->rowCount();
+                    echo "<h3>".$nbCars."</h3>";
+                ?>
+                
+            </div>
+            <div class="col-3 bg-warning text-white text-center">
+                <h2>marque(s)</h2>
+                <?php
+                    $brands = $bdd->query("SELECT * FROM marques");
+                    $nbBrands = $brands->rowCount();
+                    echo "<h3>".$nbBrands."</h3>";
+                ?>
+            </div>
+            <div class="col-3 bg-success text-white text-center">
+                <h2>utilisateur(s)</h2>
+                <?php
+                    $users = $bdd->query("SELECT * FROM users");
+                    $nbUsers = $users->rowCount();
+                    echo "<h3>".$nbUsers."</h3>";
+                ?>
+            </div>
+        </div>
 
 
     </div>
