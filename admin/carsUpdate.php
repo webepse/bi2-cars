@@ -136,6 +136,35 @@ $req->closeCursor();
                 }
             ?>
         </form>
+
+        <h3>Galerie d'image</h3>
+        <a href="imgAdd.php?id=<?= $id ?>" class="btn btn-primary">Ajouter une image</a>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>image</th>
+                    <th>action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                    $galImg = $bdd->prepare("SELECT * FROM images WHERE id_voiture=?");
+                    $galImg->execute([$id]);
+                    while($donGalImg=$galImg->fetch())
+                    {
+                        echo "<tr>";
+                            echo "<td>".$donGalImg['id']."</td>";
+                            echo "<td>".$donGalImg['image']."</td>";
+                            echo "<td><a href='' class='btn btn-danger'>Supprimer</a></td>";
+                        echo "</tr>";
+                    }
+                    $galImg->closeCursor();
+                ?>
+            </tbody>
+        </table>
+
+
     </div>
 </body>
 </html>
