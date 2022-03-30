@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mer. 09 mars 2022 à 09:32
+-- Généré le : mer. 30 mars 2022 à 08:34
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.4.9
 
@@ -26,6 +26,29 @@ USE `cars`;
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `contact`
+--
+
+DROP TABLE IF EXISTS `contact`;
+CREATE TABLE IF NOT EXISTS `contact` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `message` text NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `contact`
+--
+
+INSERT INTO `contact` (`id`, `nom`, `email`, `message`, `date`) VALUES
+(3, 'berti', 'berti@epse.be', 'test \r\ntest\r\ntest', '2022-03-30 10:33:20');
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `images`
 --
 
@@ -36,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `images` (
   `id_voiture` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_voiture` (`id_voiture`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `images`
@@ -57,14 +80,15 @@ CREATE TABLE IF NOT EXISTS `marques` (
   `nom` varchar(100) NOT NULL,
   `logo` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `marques`
 --
 
 INSERT INTO `marques` (`id`, `nom`, `logo`) VALUES
-(1, 'Alfa Romeo', 'alfa.png');
+(1, 'Alfa Romeo', 'alfa.png'),
+(2, 'VW', 'vw.png');
 
 -- --------------------------------------------------------
 
@@ -103,14 +127,15 @@ CREATE TABLE IF NOT EXISTS `voiture` (
   `cover` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_marque` (`id_marque`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `voiture`
 --
 
 INSERT INTO `voiture` (`id`, `id_marque`, `model`, `carburant`, `catalogue`, `cover`) VALUES
-(1, 1, 'Giulietta', 'E', NULL, 'giulietta.jpg');
+(1, 1, 'Giulietta', 'E', NULL, 'giulietta.jpg'),
+(2, 2, 'Polo', 'D', NULL, 'polo.jpg');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
