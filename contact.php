@@ -75,6 +75,12 @@
 <body>
     <div class="container">
         <h2>Contact</h2>
+        <?php
+            if(isset($_GET['message']))
+            {
+                echo "<div class='alert alert-success'>Votre message a bien été envoyé</div>";
+            }
+        ?>
         <form action="treatment.php" method="POST" id="my-form">
             <div class="form-group my-3">
                 <label for="nom">Nom: </label>

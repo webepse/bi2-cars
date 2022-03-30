@@ -26,7 +26,15 @@
 
         if($err==0)
         {
-
+            require "connexion.php";
+            $insert = $bdd->prepare("INSERT INTO contact(nom,email,message,date) VALUES(:nom,:email,:message,NOW())");
+            $insert->execute([
+                ":nom"=>$nom,
+                ":email"=>$email,
+                ":message"=>$message
+            ]);
+            $insert->closeCursor();
+            header("LOCATION:contact.php?message=success");
         }else{
             header("LOCATION:contact.php?error=".$err);
         }
