@@ -9,6 +9,7 @@
         <a class="nav-link" href="dashboard.php">Home</a>
         <a class="nav-link" href="cars.php">Cars</a>
         <a class="nav-link" href="mark.php">Marques</a>
+        <a class="nav-link" href="contact.php">contact</a>
       </div>
       <ul class="navbar-nav ms-auto">
           <a class="nav-link" href="dashboard.php?deco=ok">Déconnexion</a>
