@@ -22,5 +22,7 @@
         }
         $voitures->closeCursor();
     ?>
+    <h3><a href="contact.php">Envoyer un message</a></h3>
+
 </body>
 </html>
