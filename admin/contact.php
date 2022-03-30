@@ -8,7 +8,21 @@
 
     if(isset($_GET['delete']))
     {
+        // vérifier si le message existe 
+        $id = htmlspecialchars($_GET['delete']);
+        $reqDel = $bdd->prepare("SELECT * FROM contact WHERE id=?");
+        $reqDel->execute([$id]);
+        if(!$donDel = $reqDel->fetch()){
+            $reqDel->closeCursor();
+            header("LOCATION:contact.php");
+        }
+        $reqDel->closeCursor();
 
+        // je supprime 
+        $delete = $bdd->prepare("DELETE FROM contact WHERE id=?");
+        $delete->execute([$id]);
+        $delete->closeCursor();
+        header("LOCATION:contact.php?deleteSuccess=".$id);
     }
 
 ?>
@@ -31,6 +45,12 @@
     ?>
     <div class="container-fluid">
         <h1>Les messages de contact</h1>
+        <?php
+            if(isset($_GET['deleteSuccess']))
+            {
+                echo "<div class='alert alert-danger'>Vous avez bien supprimé le message n°".$_GET['deleteSuccess']."</div>"; 
+            }
+        ?>
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -49,7 +69,7 @@
                        {
                             echo "<tr>";    
                                 echo "<td>".$donContact['id']."</td>";
-                                echo "<td>".$donContact['nom']."</td>";
+                                echo "<td><a href='contactShow.php?id=".$donContact['id']."'>".$donContact['nom']."</a></td>";
                                 echo "<td>".$donContact['email']."</td>";
                                 echo "<td>".$donContact['myDate']."</td>";
                                 echo "<td>";
