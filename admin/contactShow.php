@@ -42,7 +42,7 @@
     <?php 
         include("partials/header.php");
     ?>
-    <div class="container-fluid">
+    <div class="container">
         <h2>Les messages de <?= $don['nom'] ?></h2>
         <h6>le <?= $don['myDate'] ?></h6>
         <h5>De <a href="mailto:<?= $don['email'] ?>"><?= $don['email'] ?></a></h5>
@@ -51,7 +51,10 @@
                 <?= nl2br($don['message']) ?>
             </div>
         </div>
-       <a href="contact.php" class="btn btn-secondary">Retour</a>
+        <div class="d-flex justify-content-between">
+            <a href="contact.php" class="btn btn-secondary my-3">Retour</a>
+            <a href="contact.php?delete=<?= $don['id'] ?>" class="btn btn-danger my-3">Supprimer</a>
+        </div>
     </div>    
 </body>
 </html>
