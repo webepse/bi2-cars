@@ -27,6 +27,7 @@
             $voitures = $bdd->query("SELECT voiture.model AS vmodel, marques.nom AS mnom, voiture.id AS vid FROM voiture INNER JOIN marques ON voiture.id_marque = marques.id ORDER BY voiture.id DESC LIMIT 6");
             while($voiture = $voitures->fetch())
             {
+                // echo "<div class='voitures' style='background-color: ".$voiture['color'].";'><a href='voiture.php?id=".$voiture['vid']."' class='car'>".$voiture['mnom']." ".$voiture['vmodel']."</a></div>";
                 echo "<div class='voitures'><a href='voiture.php?id=".$voiture['vid']."' class='car'>".$voiture['mnom']." ".$voiture['vmodel']."</a></div>";
             }
             $voitures->closeCursor();
