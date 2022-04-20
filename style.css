@@ -1,0 +1,17 @@
+#resultat{
+    color: red;
+}
+
+#container-voiture
+{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.voitures
+{
+    width: 200px;
+    height: 200px;
+    margin: 15px;
+    background-color: #eaeaea;
+}
