@@ -36,7 +36,7 @@
             if(isset($_GET['search']))
             {
                 // requête à la bdd
-                $req = $bdd->prepare("SELECT * FROM marques WHERE nom LIKE :search");
+                $req = $bdd->prepare("SELECT marques.nom AS mnom, voiture.model AS vmodel, voiture.id as vid FROM marques INNER JOIN voiture ON marques.id=voiture.id_marque WHERE marques.nom LIKE :search OR voiture.model LIKE :search");
                 $req->execute([
                     ":search"=> "%".$search."%"
                 ]);
@@ -46,7 +46,7 @@
                 {
                     while($don = $req->fetch())
                     {
-                        echo "<div>".$don['nom']."</div>";
+                        echo "<div><a href='voiture.php?id=".$don['vid']."'>".$don['mnom']." ".$don['vmodel']."</a></div>";
                     }
                 }else{
                     echo "<div>Aucun résultat pour cette recherche</div>";
