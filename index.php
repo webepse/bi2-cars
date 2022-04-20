@@ -14,6 +14,14 @@
 </head>
 <body>
     <h1>Cars</h1>
+    <form action="search.php" method="GET">
+        <div>
+            <label for="recherche">Recherche: </label>
+            <input type="text" id="recherche" name="search">
+            <input type="submit" value="Rechercher">
+        </div>
+
+    </form>
     <?php
         $voitures = $bdd->query("SELECT voiture.model AS vmodel, marques.nom AS mnom, voiture.id AS vid FROM voiture INNER JOIN marques ON voiture.id_marque = marques.id");
         while($voiture = $voitures->fetch())

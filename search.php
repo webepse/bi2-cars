@@ -21,7 +21,7 @@
     <title>Document</title>
 </head>
 <body>
-    <h2>Rechercher une marque</h2>
+    <h2>Rechercher</h2>
     <form action="search.php" method="GET">
         <div>
             <label for="recherche">Recherche: </label>
